@@ -1,4 +1,3 @@
-import io
 import sys
 from random import randint
 
@@ -8,46 +7,11 @@ from PyQt6.QtWidgets import (
     QApplication, QWidget
 )
 
-template = """<?xml version="1.0" encoding="UTF-8"?>
-<ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>585</width>
-    <height>427</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>Form</string>
-  </property>
-  <widget class="QPushButton" name="draw">
-   <property name="geometry">
-    <rect>
-     <x>230</x>
-     <y>180</y>
-     <width>101</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Нарисовать</string>
-   </property>
-  </widget>
- </widget>
- <resources/>
- <connections/>
-</ui>
-"""
-
 
 class Circles(QWidget):
     def __init__(self):
         super().__init__()
-        f = io.StringIO(template)
-        uic.loadUi(f, self)
+        uic.loadUi("UI.ui", self)
         self.setWindowTitle('Git и желтые окружности')
         self.circles = []
         self.draw.clicked.connect(self.click_btn)
