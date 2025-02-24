@@ -1,24 +1,30 @@
 import sys
 from random import randint
 
-from PyQt6 import uic
 from PyQt6.QtGui import QPainter, QColor
 from PyQt6.QtWidgets import (
     QApplication, QWidget
 )
 
+from ui import Ui_Form
 
-class Circles(QWidget):
+
+class Circles(Ui_Form, QWidget):
     def __init__(self):
         super().__init__()
-        uic.loadUi("UI.ui", self)
-        self.setWindowTitle('Git и желтые окружности')
+        self.setWindowTitle('Git и случайные окружности')
+
         self.circles = []
+
+        super().setupUi(self)
         self.draw.clicked.connect(self.click_btn)
 
     def click_btn(self):
         d = randint(0, 100)
-        self.circles.append((randint(0, self.width() - d), randint(0, self.height() - d), d))
+        self.circles.append((randint(0, self.width() - d),
+                             randint(0, self.height() - d),
+                             d,
+                             QColor(randint(0, 255), randint(0, 255), randint(0, 255))))
         self.update()
 
     def update_drawing(self):
@@ -27,8 +33,8 @@ class Circles(QWidget):
     def paintEvent(self, event):
         qp = QPainter()
         qp.begin(self)
-        qp.setPen(QColor(255, 255, 0))
-        for x, y, d in self.circles:
+        for x, y, d, color in self.circles:
+            qp.setPen(color)
             qp.drawEllipse(x, y, d, d)
         qp.end()
         super().paintEvent(event)
